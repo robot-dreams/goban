@@ -1,0 +1,33 @@
+line {
+  pointer-events: none;
+  stroke: black;
+  stroke-width: 1;
+}
+
+svg {
+  width: 636.6px;
+  height: 681.75px;
+  background: #DCB35C;
+}
+
+.star-point {
+  pointer-events: none;
+  fill: black;
+  r: 3px;
+}
+
+.stone {
+  pointer-events: none;
+  r: 16px;
+}
+
+#canvas {
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
