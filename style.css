@@ -5,9 +5,10 @@ line {
 }
 
 svg {
-  width: 636.6px;
-  height: 681.75px;
+  aspect-ratio: 14/15;
   background: #DCB35C;
+  max-height: 100%;
+  max-width: 100%;
 }
 
 .star-point {

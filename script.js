@@ -9,6 +9,7 @@ const X0 = 21.15;
 const Y0 = 20.925;
 const DX = 33;
 const DY = 35.55;
+const WIDTH = 2 * X0 + (BOARD_SIZE - 1) * DX;
 
 let board = newGrid(null);
 let stones = newGrid(null);
@@ -77,6 +78,10 @@ function placeStone(i, j) {
 }
 
 function offsetToCoord(x, y) {
+  let scale = WIDTH / SVG_ROOT.getBoundingClientRect().width;
+  x *= scale;
+  y *= scale;
+
   let clamp = (x) => {
     x = Math.max(x, 0);
     x = Math.min(x, BOARD_SIZE - 1);
