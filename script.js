@@ -5,16 +5,16 @@ const STAR_START = 3;
 const STAR_STEP = 6;
 const BLACK = 0;
 const WHITE = 1;
-const X0 = 49.15;
-const Y0 = 50.925;
+const X0 = 63.15;
+const Y0 = 65.925;
 const DX = 33;
 const DY = 35.55;
 const WIDTH = 2 * X0 + (BOARD_SIZE - 1) * DX;
 const HEIGHT = 2 * Y0 + (BOARD_SIZE - 1) * DY;
 const STAR_RADIUS = 3;
 const STONE_RADIUS = 16;
-const CAPTURED_X = [X0 / 2, WIDTH - X0 / 2];
-const CAPTURED_Y = [Y0 / 2, HEIGHT - Y0 / 2];
+const CAPTURED_X = [X0 - DX, WIDTH - X0 + DX];
+const CAPTURED_Y = [Y0 - DY, HEIGHT - Y0 + DY];
 
 let board = newGrid(null);
 let stones = newGrid(null);
@@ -86,10 +86,8 @@ function redrawCapturedText(player) {
   text.textContent = numCaptured[player];
 
   let bBox = text.getBBox();
-  let x = CAPTURED_X[player];
+  let x = CAPTURED_X[player] + (player === BLACK ? DX : -DX);
   let y = CAPTURED_Y[player];
-  // Inverted color for text visibility
-  text.setAttribute("fill", player === BLACK ? 'white' : 'black');
   text.setAttribute("x", x - bBox.width / 2);
   text.setAttribute("y", y + bBox.height / 4);
   numCapturedSVG[player] = text;
