@@ -169,10 +169,13 @@ function removeStone(i, j) {
 
 // Precondition: (i, j) has a stone
 function findGroup(i, j, group, visited) {
+  if (visited[i][j]) {
+    return;
+  }
   group.push([i, j]);
   visited[i][j] = true;
   for (let [ii, jj] of neighbors(i, j))
-    if (board[ii][jj] === board[i][j] && !visited[ii][jj])
+    if (board[ii][jj] === board[i][j])
       findGroup(ii, jj, group, visited);
 }
 
