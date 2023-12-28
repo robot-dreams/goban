@@ -71,18 +71,26 @@ function drawBoard() {
   }
 }
 
-// Precondition: board[i][j] === null
-function placeStone(i, j) {
-  board[i][j] = player;
-  stones[i][j] = addSVG(
+function drawStone(x, y, player) {
+  return addSVG(
     "circle",
     {
       class: "stone",
-      cx: X0 + i * DX,
-      cy: Y0 + j * DY,
+      cx: x,
+      cy: y,
       fill: player === BLACK ? "black" : "white",
       r: STONE_RADIUS,
     }
+  );
+}
+
+// Precondition: board[i][j] === null
+function placeStone(i, j) {
+  board[i][j] = player;
+  stones[i][j] = drawStone(
+    X0 + i * DX,
+    Y0 + j * DY,
+    player,
   );
 }
 
