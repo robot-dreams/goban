@@ -10,17 +10,18 @@ const Y0 = 50.925;
 const DX = 33;
 const DY = 35.55;
 const WIDTH = 2 * X0 + (BOARD_SIZE - 1) * DX;
+const HEIGHT = 2 * Y0 + (BOARD_SIZE - 1) * DY;
 const STAR_RADIUS = 3;
 const STONE_RADIUS = 16;
+const CAPTURED_X = [X0 / 2, WIDTH - X0 / 2];
+const CAPTURED_Y = [Y0 / 2, HEIGHT - Y0 / 2];
 
 let board = newGrid(null);
 let stones = newGrid(null);
 let player = BLACK;
 let enemy = WHITE;
-let numCaptured = {
-  [BLACK]: 0,
-  [WHITE]: 0,
-};
+let numCaptured = [0, 0];
+let numCapturedSVG = [null, null];
 
 let wheeling = false;
 let undoStack = [];
@@ -69,6 +70,29 @@ function drawBoard() {
       });
     }
   }
+
+  for (let player of [BLACK, WHITE]) {
+    drawStone(CAPTURED_X[player], CAPTURED_Y[player], player);
+    redrawCapturedText(player);
+  }
+}
+
+function redrawCapturedText(player) {
+  if (numCapturedSVG[player] !== null) {
+    numCapturedSVG[player].remove();
+  }
+
+  let text = addSVG("text");
+  text.textContent = numCaptured[player];
+
+  let bBox = text.getBBox();
+  let x = CAPTURED_X[player];
+  let y = CAPTURED_Y[player];
+  // Inverted color for text visibility
+  text.setAttribute("fill", player === BLACK ? 'white' : 'black');
+  text.setAttribute("x", x - bBox.width / 2);
+  text.setAttribute("y", y + bBox.height / 4);
+  numCapturedSVG[player] = text;
 }
 
 function drawStone(x, y, player) {
@@ -209,6 +233,7 @@ function play(i, j) {
   for (let [ii, jj] of captured)
     removeStone(ii, jj);
   numCaptured[enemy] += captured.length;
+  redrawCapturedText(enemy);
   [player, enemy] = [enemy, player];
   undoStack.push([[i, j], captured]);
 }
@@ -229,6 +254,7 @@ function undo() {
   for (let [ii, jj] of captured)
     placeStone(ii, jj);
   numCaptured[player] -= captured.length;
+  redrawCapturedText(player);
   [player, enemy] = [enemy, player];
   redoStack.push([i, j]);
 }
