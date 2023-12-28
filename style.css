@@ -14,12 +14,10 @@ svg {
 .star-point {
   pointer-events: none;
   fill: black;
-  r: 3px;
 }
 
 .stone {
   pointer-events: none;
-  r: 16px;
 }
 
 #canvas {

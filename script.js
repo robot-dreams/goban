@@ -10,6 +10,8 @@ const Y0 = 50.925;
 const DX = 33;
 const DY = 35.55;
 const WIDTH = 2 * X0 + (BOARD_SIZE - 1) * DX;
+const STAR_RADIUS = 3;
+const STONE_RADIUS = 16;
 
 let board = newGrid(null);
 let stones = newGrid(null);
@@ -63,6 +65,7 @@ function drawBoard() {
         class: "star-point",
         cx: X0 + i * DX,
         cy: Y0 + j * DY,
+        r: STAR_RADIUS,
       });
     }
   }
@@ -77,7 +80,8 @@ function placeStone(i, j) {
       class: "stone",
       cx: X0 + i * DX,
       cy: Y0 + j * DY,
-      fill: player === BLACK ? "black" : "white"
+      fill: player === BLACK ? "black" : "white",
+      r: STONE_RADIUS,
     }
   );
 }
