@@ -5,8 +5,8 @@ const STAR_START = 3;
 const STAR_STEP = 6;
 const BLACK = 0;
 const WHITE = 1;
-const X0 = 21.15;
-const Y0 = 20.925;
+const X0 = 49.15;
+const Y0 = 50.925;
 const DX = 33;
 const DY = 35.55;
 const WIDTH = 2 * X0 + (BOARD_SIZE - 1) * DX;
@@ -82,14 +82,8 @@ function offsetToCoord(x, y) {
   let scale = WIDTH / SVG_ROOT.getBoundingClientRect().width;
   x *= scale;
   y *= scale;
-
-  let clamp = (x) => {
-    x = Math.max(x, 0);
-    x = Math.min(x, BOARD_SIZE - 1);
-    return x;
-  };
-  let i = Math.round(clamp((x - X0) / DX));
-  let j = Math.round(clamp((y - Y0) / DY));
+  let i = Math.round((x - X0) / DX);
+  let j = Math.round((y - Y0) / DY);
   return [i, j];
 }
 
@@ -204,7 +198,7 @@ function play(i, j) {
 
 function handleClick(e) {
   let [i, j] = offsetToCoord(e.offsetX, e.offsetY);
-  if (canPlay(i, j)) {
+  if (inRange(i, j) && canPlay(i, j)) {
     play(i, j);
     redoStack = [];
   }
