@@ -16,6 +16,7 @@ let stones = newGrid(null);
 let player = BLACK;
 let enemy = WHITE;
 
+let wheeling = false;
 let undoStack = [];
 let redoStack = [];
 
@@ -240,6 +241,21 @@ function handleKeyDown(e) {
   } 
 }
 
+function handleWheel(e) {
+  if (!wheeling) {
+    requestAnimationFrame(() => {
+      if (e.deltaY > 0) {
+        undo();
+      } else {
+        redo();
+      }
+      wheeling = false;
+    });
+    wheeling = true;
+  }
+}
+
 drawBoard();
 SVG_ROOT.addEventListener("click", handleClick);
 document.addEventListener("keydown", handleKeyDown);
+document.addEventListener("wheel", handleWheel);
