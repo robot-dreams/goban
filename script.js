@@ -15,6 +15,10 @@ let board = newGrid(null);
 let stones = newGrid(null);
 let player = BLACK;
 let enemy = WHITE;
+let numCaptured = {
+  [BLACK]: 0,
+  [WHITE]: 0,
+};
 
 let wheeling = false;
 let undoStack = [];
@@ -192,6 +196,7 @@ function play(i, j) {
   let captured = findAllCaptures(i, j);
   for (let [ii, jj] of captured)
     removeStone(ii, jj);
+  numCaptured[enemy] += captured.length;
   [player, enemy] = [enemy, player];
   undoStack.push([[i, j], captured]);
 }
@@ -211,6 +216,7 @@ function undo() {
   removeStone(i, j);
   for (let [ii, jj] of captured)
     placeStone(ii, jj);
+  numCaptured[player] -= captured.length;
   [player, enemy] = [enemy, player];
   redoStack.push([i, j]);
 }
